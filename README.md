@@ -1,2 +1,2 @@
-# node12-lerna-jenkins-library
-Node 12 builder that builds Lerna project for Jenkins.
+# node12-cypress-jenkins-library
+Node 12 builder with Cypress for Jenkins.
