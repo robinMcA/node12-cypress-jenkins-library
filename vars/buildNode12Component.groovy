@@ -25,7 +25,7 @@ def call(Map config) {
     }
 
     stage('Install dependencies') {
-      npm "install"
+      npm "ci"
     }
 
     stage('Build') {
@@ -85,7 +85,7 @@ def call(Map config) {
       stage('Package') {
         sh "mkdir -p ${artifactDir}"
 
-        npm "install --production --ignore-scripts --prefer-offline"
+        npm "ci --production --ignore-scripts --prefer-offline"
         sh "mv ${config.baseDir}/node_modules ${config.baseDir}/package.json ${artifactDir}"
 
         // The build and dist folders may exisit depending on builder.
