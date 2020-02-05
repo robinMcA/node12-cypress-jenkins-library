@@ -50,8 +50,16 @@ def call(Map config) {
           "REACT_APP_VERSION=${config.buildNumber}"
         ]) {
           npm 'test'
-          junit allowEmptyResults: true, testResults: testOutput
         }
+        
+        publishHTML (target: [
+          allowMissing: false,
+          alwaysLinkToLastBuild: false,
+          keepAll: true,
+          reportDir: 'coverage',
+          reportFiles: 'coverage/index.html',
+          reportName: "Coverage Report"
+        ])
       }
     } catch (e) {
       echo "Archiving E2E test videos"
