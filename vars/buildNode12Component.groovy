@@ -51,7 +51,14 @@ def call(Map config) {
         ]) {
           npm 'test'
         }
-        
+        publishHTML (target: [
+          allowMissing: false,
+          alwaysLinkToLastBuild: false,
+          keepAll: true,
+          reportDir: 'coverage',
+          reportFiles: 'coverage/index.html',
+          reportName: "Coverage Report"
+        ])
 
       }
     } catch (e) {
