@@ -11,12 +11,11 @@ def call(Map config) {
   final npm = { cmd ->
     ansiColor('xterm') {
       dir(config.baseDir) {
-        sh "JEST_JUNIT_OUTPUT=${testOutput} npm ${cmd}"
+        sh "NODE_OPTIONS=--max-old-space-size=4096 JEST_JUNIT_OUTPUT=${testOutput} npm ${cmd}"
       }
     }
   }
   
-  container("node12-builder") {
 
     stage('Build Details') {
       echo "Project:   ${config.project}"
@@ -76,11 +75,10 @@ def call(Map config) {
       
       throw e
     }
-  }
+  
 
   if(config.stage == 'dist') {
 
-    container('node12-builder') {
       stage('Build') {
         withEnv([
           "REACT_APP_VERSION=${config.buildNumber}"
@@ -119,7 +117,6 @@ def call(Map config) {
           sh "mv ${config.baseDir}/next.config.js ${artifactDir}"
         }
       }
-    }
 
     stage('Archive to Jenkins') {
       def tarName = "${config.project}-${config.component}-${config.buildNumber}.tar.gz"
